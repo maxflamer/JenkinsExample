@@ -1,17 +1,17 @@
 node {
    stage('Get Source') { 
       // Get some code from a GitHub repository
-      git 'https://github.com/username/Repository.git' 
+      git 'https://github.com/<username>/<Repository>.git' 
    }
     stage ('Restore Nuget'){
       // Mandatory step before building, download nuget.exe and place it in the path below
-        bat 'c:/tools/nuget.exe restore ProjectName.sln'
+        bat 'c:/tools/nuget.exe restore <ProjectName>.sln'
    }
    stage('Build') {
       // Run the MS build
-       bat "\"${tool 'MSBuild'}\" ProjectName.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+       bat "\"${tool 'MSBuild'}\" <ProjectName>.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
    }
    stage('Deploy') {
-        bat 'xcopy /s "C:\\Program Files (x86)\\Jenkins\\workspace\\PipelineName" "E:\\PathToDeploy" /y'
+        bat 'xcopy /s "C:\\Program Files (x86)\\Jenkins\\workspace\\<PipelineName>" "E:\\<PathToDeploy>" /y'
    }
 }
